@@ -1,10 +1,12 @@
 import { Entity } from './base/entity'
 
+type PetAge = 'Filhote' | 'Jovem' | 'Adulto' | 'Idoso'
+
 interface PetProps {
   organizationId: string
   name: string
   description: string
-  age: 'Filhote' | 'Jovem' | 'Adulto' | 'Idoso'
+  age: PetAge
   size: 'Pequenino' | 'Médio' | 'Alto'
   energy: 'Baixa' | 'Média' | 'Alta'
   independence: 'Baixo' | 'Médio' | 'Alto'
@@ -26,8 +28,18 @@ export class Pet extends Entity<PetProps> {
     return this.props.description
   }
 
+  set description(value: string) {
+    if (value.length > 250) throw new Error('Description is too long')
+
+    this.props.description = value
+  }
+
   get age() {
     return this.props.age
+  }
+
+  public set age(value: PetAge) {
+    this.props.age = value
   }
 
   get size() {
@@ -50,11 +62,21 @@ export class Pet extends Entity<PetProps> {
     return this.props.images
   }
 
+  set images(value: string[] | null) {
+    this.props.images = value
+  }
+
   get adoptionRequirements() {
     return this.props.adoptionRequirements
   }
 
+  set adoptionRequirements(value: string[] | null) {
+    this.props.adoptionRequirements = value
+  }
+
   static create(props: PetProps, id?: string) {
+    if (props.description.length > 250)
+      throw new Error('Description is too long')
     return new Pet(props, id)
   }
 }
