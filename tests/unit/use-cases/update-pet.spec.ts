@@ -7,12 +7,13 @@ import { Pet } from '../../../src/domain/entities/pet'
 describe('Update Pet Use Case tests', () => {
   let sutUseCase: UpdatePetUseCase
   let petRepository: InMemoryPetRepository
+  let pet: Pet
 
   beforeEach(async () => {
     petRepository = new InMemoryPetRepository()
     sutUseCase = new UpdatePetUseCase(petRepository)
 
-    const pet = Pet.create({
+    pet = Pet.create({
       organizationId: '1',
       name: 'Carlos',
       description: 'Doguinho lindo',
@@ -42,6 +43,20 @@ describe('Update Pet Use Case tests', () => {
       updatePetProps.description,
     )
     expect(petRepository.pets[0].age).toEqual(updatePetProps.age)
+  })
+
+  it('Should be able to update a single field of a pet', async () => {
+    const updatePetProps = {
+      id: petRepository.pets[0].id,
+      description: 'Nova descrição',
+    }
+    await sutUseCase.execute(updatePetProps)
+
+    expect(petRepository.pets[0].id).toBeTruthy()
+    expect(petRepository.pets[0].description).toEqual(
+      updatePetProps.description,
+    )
+    expect(petRepository.pets[0].age).toEqual(pet.age)
   })
 
   it('Should not be able to update an unexisting pet', async () => {

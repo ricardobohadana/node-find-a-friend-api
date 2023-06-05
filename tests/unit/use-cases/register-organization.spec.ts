@@ -31,6 +31,9 @@ describe('Register Organization Use Case tests', () => {
     expect(organizationRepository.organizations[0].email).toEqual(
       organization.email,
     )
+    expect(organizationRepository.organizations[0].password).not.toEqual(
+      organization.password,
+    )
   })
 
   it('Should not be able to register an organization with repeated email', async () => {
