@@ -2,12 +2,15 @@ import { hash } from 'bcryptjs'
 import { IOrganizationRepository } from '../interfaces/repositories/organization'
 import { UseCase } from './base/use-case'
 import { Organization } from '../entities/organization'
+import { EntityConflictError } from '../errors/entity-conflict'
 
 export interface RegisterOrganizationUseCaseProps {
   personName: string
   email: string
   cep: string
   address: string
+  city: string
+  state: string
   phoneNumber: string
   password: string
 }
@@ -29,6 +32,8 @@ export class RegisterOrganizationUseCase
     email,
     address,
     cep,
+    city,
+    state,
     password,
     personName,
     phoneNumber,
@@ -39,13 +44,17 @@ export class RegisterOrganizationUseCase
         phoneNumber,
       })
 
-    if (existingOrg) throw new Error('Email ou número de telefone inválido(s)')
+    if (existingOrg) throw new EntityConflictError('Organization')
 
     if (!cep || !cep.trim()) throw new Error('Cep inválido')
+    if (!city || !city.trim()) throw new Error('Cidade inválida')
+    if (!state || !state.trim()) throw new Error('Estado inválido')
 
     const hashedPassword = await hash(password, 10)
 
     const organization = Organization.create({
+      city,
+      state,
       address,
       cep,
       email,

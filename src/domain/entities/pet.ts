@@ -1,3 +1,7 @@
+import { PetEnergy } from '../value-objects/pet-energy'
+import { PetEnvironment } from '../value-objects/pet-environment'
+import { PetIndependence } from '../value-objects/pet-independence'
+import { PetSize } from '../value-objects/pet-size'
 import { Entity } from './base/entity'
 
 type PetAge = 'Filhote' | 'Jovem' | 'Adulto' | 'Idoso'
@@ -7,10 +11,10 @@ interface PetProps {
   name: string
   description: string
   age: PetAge
-  size: 'Pequenino' | 'Médio' | 'Alto'
-  energy: 'Baixa' | 'Média' | 'Alta'
-  independence: 'Baixo' | 'Médio' | 'Alto'
-  environment: 'Amplo' | 'Balanceado' | 'Restrito'
+  size: PetSize
+  energy: PetEnergy
+  independence: PetIndependence
+  environment: PetEnvironment
   images: string[] | null
   adoptionRequirements: string[] | null
 }

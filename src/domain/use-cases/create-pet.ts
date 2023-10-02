@@ -1,4 +1,6 @@
 import { Pet } from '../entities/pet'
+import { EntityNotFoundError } from '../errors/entity-not-found'
+import { IOrganizationRepository } from '../interfaces/repositories/organization'
 import { IPetRepository } from '../interfaces/repositories/pet'
 import { UseCase } from './base/use-case'
 
@@ -20,7 +22,10 @@ interface CreatePetUseCaseOutput {}
 export class CreatePetUseCase
   implements UseCase<CreatePetUseCaseProps, CreatePetUseCaseOutput>
 {
-  constructor(private readonly petRepository: IPetRepository) {}
+  constructor(
+    private readonly petRepository: IPetRepository,
+    private readonly organizationRepository: IOrganizationRepository,
+  ) {}
 
   public async execute(
     props: CreatePetUseCaseProps,
@@ -30,6 +35,11 @@ export class CreatePetUseCase
       images: props.images ?? null,
       adoptionRequirements: props.adoptionRequirements ?? null,
     }
+    const organization = await this.organizationRepository.get(
+      props.organizationId,
+    )
+    if (!organization)
+      throw new EntityNotFoundError('Organization', props.organizationId)
     const pet = Pet.create(createProps)
     await this.petRepository.create(pet)
     return {}

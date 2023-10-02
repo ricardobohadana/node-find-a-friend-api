@@ -6,4 +6,6 @@ export interface IOrganizationRepository extends IBaseRepository<Organization> {
     email?: string
     phoneNumber?: string
   }): Promise<Organization | null>
+
+  findManyByCity(city: string): Promise<Organization[]>
 }

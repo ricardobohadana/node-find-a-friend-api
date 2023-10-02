@@ -20,6 +20,8 @@ describe('Register Organization Use Case tests', () => {
       email: faker.internet.email(),
       address: faker.location.streetAddress(),
       cep: faker.location.zipCode(),
+      city: faker.location.city(),
+      state: faker.location.state(),
       password: faker.internet.password(),
       personName: faker.person.fullName(),
       phoneNumber: faker.phone.number(),
@@ -41,6 +43,8 @@ describe('Register Organization Use Case tests', () => {
       email: faker.internet.email(),
       address: faker.location.streetAddress(),
       cep: faker.location.zipCode(),
+      city: faker.location.city(),
+      state: faker.location.state(),
       password: faker.internet.password(),
       personName: faker.person.fullName(),
       phoneNumber: faker.phone.number(),
@@ -52,6 +56,8 @@ describe('Register Organization Use Case tests', () => {
       email: organization.email,
       address: faker.location.streetAddress(),
       cep: faker.location.zipCode(),
+      city: faker.location.city(),
+      state: faker.location.state(),
       password: faker.internet.password(),
       personName: faker.person.fullName(),
       phoneNumber: faker.phone.number(),
@@ -66,6 +72,8 @@ describe('Register Organization Use Case tests', () => {
       email: faker.internet.email(),
       address: faker.location.streetAddress(),
       cep: faker.location.zipCode(),
+      city: faker.location.city(),
+      state: faker.location.state(),
       password: faker.internet.password(),
       personName: faker.person.fullName(),
       phoneNumber: faker.phone.number(),
@@ -77,6 +85,8 @@ describe('Register Organization Use Case tests', () => {
       email: faker.internet.email(),
       address: faker.location.streetAddress(),
       cep: faker.location.zipCode(),
+      city: faker.location.city(),
+      state: faker.location.state(),
       password: faker.internet.password(),
       personName: faker.person.fullName(),
       phoneNumber: organization.phoneNumber,
@@ -91,6 +101,40 @@ describe('Register Organization Use Case tests', () => {
       email: faker.internet.email(),
       address: faker.location.streetAddress(),
       cep: '',
+      city: faker.location.city(),
+      state: faker.location.state(),
+      password: faker.internet.password(),
+      personName: faker.person.fullName(),
+      phoneNumber: faker.phone.number(),
+    }
+
+    expect(
+      async () => await sutUseCase.execute(organization),
+    ).rejects.toThrowError()
+  })
+  it('Should not be able to register an organization without a city', async () => {
+    const organization: RegisterOrganizationUseCaseProps = {
+      email: faker.internet.email(),
+      address: faker.location.streetAddress(),
+      cep: faker.location.zipCode(),
+      city: '',
+      state: faker.location.state(),
+      password: faker.internet.password(),
+      personName: faker.person.fullName(),
+      phoneNumber: faker.phone.number(),
+    }
+
+    expect(
+      async () => await sutUseCase.execute(organization),
+    ).rejects.toThrowError()
+  })
+  it('Should not be able to register an organization without state', async () => {
+    const organization: RegisterOrganizationUseCaseProps = {
+      email: faker.internet.email(),
+      address: faker.location.streetAddress(),
+      cep: faker.location.zipCode(),
+      city: faker.location.city(),
+      state: '',
       password: faker.internet.password(),
       personName: faker.person.fullName(),
       phoneNumber: faker.phone.number(),

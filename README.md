@@ -11,6 +11,7 @@ Uma API para adoção de pets
 - Deve ser possível visualizar detalhes de um pet para adoção
 - Deve ser possível se cadastrar como uma ORG ✅
 - Deve ser possível realizar login como uma ORG
+- Deve ser possível se atualizar o cadastro de uma ORG ✅
 
 ### Regras de Negócio
 

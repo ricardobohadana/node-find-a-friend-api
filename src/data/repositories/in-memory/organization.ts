@@ -7,6 +7,10 @@ export class InMemoryOrganizationRepository implements IOrganizationRepository {
     this.organizations = []
   }
 
+  async findManyByCity(city: string): Promise<Organization[]> {
+    return this.organizations.filter((o) => o.city === city)
+  }
+
   async getByEmailOrPhoneNumber({
     email,
     phoneNumber,

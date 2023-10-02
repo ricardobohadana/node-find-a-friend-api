@@ -5,6 +5,8 @@ interface OrganizationProps {
   email: string
   cep: string
   address: string
+  city: string
+  state: string
   phoneNumber: string
   password: string
 }
@@ -48,5 +50,13 @@ export class Organization extends Entity<OrganizationProps> {
 
   get password() {
     return this.props.password
+  }
+
+  get city() {
+    return this.props.city
+  }
+
+  get state() {
+    return this.props.state
   }
 }
